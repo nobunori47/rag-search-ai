@@ -1,0 +1,26 @@
+{
+  "name": "rag-search-ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ingest": "tsx src/ingest.ts",
+    "search": "tsx src/search.ts",
+    "answer": "tsx src/ask.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.106.0",
+    "@supabase/supabase-js": "^2.108.2",
+    "@types/node": "^26.0.1",
+    "dotenv": "^17.4.2",
+    "openai": "^6.45.0",
+    "tiktoken": "^1.0.22",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}
