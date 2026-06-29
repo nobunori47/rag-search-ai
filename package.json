@@ -17,8 +17,10 @@
     "@anthropic-ai/sdk": "^0.106.0",
     "@supabase/supabase-js": "^2.108.2",
     "@types/node": "^26.0.1",
+    "@types/pdf-parse": "^1.1.5",
     "dotenv": "^17.4.2",
     "openai": "^6.45.0",
+    "pdf-parse": "^2.4.5",
     "tiktoken": "^1.0.22",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"

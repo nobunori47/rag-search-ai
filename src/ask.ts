@@ -50,7 +50,13 @@ async function generateAnswer(query: string, docs: Document[]): Promise<void> {
     })
     .join("\n\n");
 
-  const sourceFiles = [...new Set(docs.map((doc) => doc.source_file))];
+  const seen = new Set<string>();
+  const citations = docs
+    .map((doc) => {
+      const page = doc.page_number != null ? ` p.${doc.page_number}` : "";
+      return `${doc.source_file}${page}`;
+    })
+    .filter((c) => (seen.has(c) ? false : seen.add(c)));
 
   const systemPrompt = `あなたは会社の規則や方針についての質問に回答するアシスタントです。
 以下のルールを厳守してください。
@@ -84,7 +90,7 @@ ${context}
       process.stdout.write(event.delta.text);
     }
   }
-  process.stdout.write(`\n出典: ${sourceFiles.join(", ")}\n`);
+  process.stdout.write(`\n出典: ${citations.join(", ")}\n`);
 }
 
 async function main(): Promise<void> {
