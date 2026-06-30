@@ -28,11 +28,39 @@ body {
   border-bottom: 1px solid #e0e0e0;
   background: #fff;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .title {
   font-size: 17px;
   font-weight: 600;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-email {
+  font-size: 12px;
+  color: #666;
+}
+
+.logout-button {
+  padding: 5px 12px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #555;
+}
+
+.logout-button:hover {
+  background: #f5f5f5;
 }
 
 /* ---- メッセージ一覧 ---- */
@@ -157,4 +185,100 @@ body {
 .button:disabled {
   background: #aaa;
   cursor: not-allowed;
+}
+
+/* ---- ログインページ ---- */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-box {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-title {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.login-desc {
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-input {
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+}
+
+.login-input:focus {
+  border-color: #0070f3;
+}
+
+.login-input:disabled {
+  background: #f9f9f9;
+}
+
+.login-error {
+  font-size: 13px;
+  color: #e53e3e;
+  padding: 8px 12px;
+  background: #fff5f5;
+  border-radius: 6px;
+  border: 1px solid #feb2b2;
+}
+
+.login-button {
+  padding: 12px;
+  background: #0070f3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.login-sent {
+  text-align: center;
+  padding: 12px 0;
+}
+
+.login-sent-text {
+  font-size: 14px;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.login-sent-sub {
+  font-size: 13px;
+  color: #666;
 }

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, FormEvent, KeyboardEvent } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "../lib/supabase/client";
 
 interface Message {
   id: string;
@@ -14,7 +16,16 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const supabase = createClient();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUserEmail(user?.email ?? null);
+    });
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -53,6 +64,10 @@ export default function ChatPage() {
         body: JSON.stringify({ question }),
       });
 
+      if (res.status === 401 || res.status === 403) {
+        router.push("/login");
+        return;
+      }
       if (!res.ok || !res.body) throw new Error("API error");
 
       const reader = res.body.getReader();
@@ -123,6 +138,11 @@ export default function ChatPage() {
     }
   }
 
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    router.push("/login");
+  }
+
   function handleKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -134,6 +154,12 @@ export default function ChatPage() {
     <div className="container">
       <header className="header">
         <h1 className="title">社内文書 RAG チャット</h1>
+        <div className="header-user">
+          {userEmail && <span className="user-email">{userEmail}</span>}
+          <button onClick={handleLogout} className="logout-button">
+            ログアウト
+          </button>
+        </div>
       </header>
 
       <main className="main">

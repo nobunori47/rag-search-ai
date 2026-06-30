@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
 import { createClient } from "@supabase/supabase-js";
+import { createClient as createAuthClient } from "../../../lib/supabase/server";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -10,6 +11,8 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
+const ALLOWED_DOMAIN =
+  process.env.NEXT_PUBLIC_ALLOWED_EMAIL_DOMAIN ?? "@techbridge.co.jp";
 const MATCH_THRESHOLD = 0.5;
 const MATCH_COUNT = 5;
 const MODEL = "claude-sonnet-4-6";
@@ -38,6 +41,23 @@ function send(
 }
 
 export async function POST(req: NextRequest) {
+  // 認証チェック
+  const authClient = await createAuthClient();
+  const {
+    data: { user },
+  } = await authClient.auth.getUser();
+
+  if (!user) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+    });
+  }
+  if (!user.email?.endsWith(ALLOWED_DOMAIN)) {
+    return new Response(JSON.stringify({ error: "Forbidden" }), {
+      status: 403,
+    });
+  }
+
   const { question } = await req.json();
   if (!question?.trim()) {
     return new Response(JSON.stringify({ error: "質問が空です" }), {
