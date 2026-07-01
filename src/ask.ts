@@ -13,7 +13,7 @@ const supabase = createClient(
 );
 
 const QUERY = process.argv[2] ?? "有給休暇はいつから使えますか?";
-const MATCH_THRESHOLD = 0.5;
+const MATCH_THRESHOLD = 0.45;
 const MATCH_COUNT = 5;
 const MODEL = "claude-sonnet-4-6";
 
