@@ -13,7 +13,7 @@ const supabase = createClient(
 
 const ALLOWED_DOMAIN =
   process.env.NEXT_PUBLIC_ALLOWED_EMAIL_DOMAIN ?? "@techbridge.co.jp";
-const MATCH_THRESHOLD = 0.5;
+const MATCH_THRESHOLD = 0.45;
 const MATCH_COUNT = 5;
 const MODEL = "claude-sonnet-4-6";
 
